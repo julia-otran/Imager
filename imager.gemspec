@@ -1,11 +1,23 @@
-Gem::Specification.new do |s|
-  s.name        = 'imager'
-  s.version     = '0.0.0'
-  s.date        = '2013-05-27'
-  s.summary     = "Imager Client API gem"
-  s.description = "A client for ImagerServer, image storange and resizer. Simple solution for not store the images inside your app."
-  s.authors     = ["Guilherme Otranto"]
-  s.email       = 'guilherme_otran@hotmail.com'
-  s.files       = ["lib/imager.rb"]
-  s.homepage    = 'http://rubygems.org/gems/imager'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'imager/version'
+
+Gem::Specification.new do |spec|
+  spec.name          = "imager"
+  spec.version       = Imager::VERSION
+  spec.authors       = ["Guilherme Otranto"]
+  spec.email         = ["guilherme_otran@hotmail.com"]
+  spec.description   = %q{TODO: Write a gem description}
+  spec.summary       = %q{TODO: Write a gem summary}
+  spec.homepage      = ""
+  spec.license       = "MIT"
+
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
+
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake"
 end

@@ -1,4 +1,5 @@
-class Imager
-end
+require "imager/version"
 
-require 'imager/server_interface'
+module Imager
+
+end
