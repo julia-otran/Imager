@@ -1,8 +1,8 @@
 # Imager
 
-Use with [ImagerServer](https://github.com/guilherme-otran/ImagerServer).
+Use with [ImagerServer](https://github.com/guilherme-otran/ImagerServer), a storange and resizer server for images.
 Check the test directory for know how the server works.
-A storange and resizer server for images. You can save your images in other domain running ImagerServer.
+ You can save your images in other domain running ImagerServer.
 
 ## Please contribute!
 A lot of the features are not implemented yet (except for the server)
