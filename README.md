@@ -60,18 +60,20 @@ You can use Collection as model name(product) and album as id(1) and get the res
 
 ### Sizes Explain:
   The server accepts the following combinations:
-    YourSizeName: { width:  100 } # Will resize (maintein main aspect) the image for 100px of width
-    YourSizeName: { height: 100 } # Will resize (maintein main aspect) the image for 100px of height
-    YourSizeName: { width:  100, height: 150 } # Will resize to fit in 100x150 px
-    YourSizeName: { original: true } # Will save the original size. Don't worry. The server compress to 50% of quality.
-
+  ```
+      YourSizeName: { width:  100 } # Will resize (maintein main aspect) the image for 100px of width
+      YourSizeName: { height: 100 } # Will resize (maintein main aspect) the image for 100px of height
+      YourSizeName: { width:  100, height: 150 } # Will resize to fit in 100x150 px
+      YourSizeName: { original: true } # Will save the original size. Don't worry. The server compress to 50% of quality.
+  ```
   You can have many sizes when posting a image:
-    sizes = [
-      small:     { width:  100 }
-      gallery:   { height: 300 }
-      mini-home: { width: 50, height: 50 }
-      original:  true
-    ]
-
+  ```
+      sizes = [
+        small:     { width:  100 }
+        gallery:   { height: 300 }
+        mini-home: { width: 50, height: 50 }
+        original:  true
+      ]
+  ```
 ### Compression
   The images always are compressed to 70%. Except for the original size (50%).
