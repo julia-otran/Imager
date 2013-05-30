@@ -18,6 +18,13 @@ module Imager
     end
 
     def self.delete(collection, album, file_id)
+      query = {}
+      query[:collection] = collection
+      query[:album]      = album
+      query[:file_id]    = file_id
+      query[:auth]       = auth_token(query)
+
+      return parse(client.post('/delete.php', { query: query }))
     end
 
     def self.client
