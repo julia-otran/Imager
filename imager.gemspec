@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["guilherme_otran@hotmail.com"]
   spec.description   = %q{A remote storange and resizer client for images.}
   spec.summary       = %q{Imager Client API}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/guilherme-otran/Imager"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
