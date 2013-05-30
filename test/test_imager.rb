@@ -11,10 +11,10 @@ class ImagerTest < Test::Unit::TestCase
 
   def test_set_server_uri
     Imager.configure do |c|
-      c.server_uri = "http://localhost/imager_server"
+      c.base_uri = "http://localhost/projects/imager_server"
     end
 
-    assert_equal "http://localhost/imager_server", Imager.server_uri
+    assert_equal "http://localhost/projects/imager_server", Imager.base_uri
   end
 
   def test_set_manager_path
@@ -42,12 +42,30 @@ class ImagerTest < Test::Unit::TestCase
   end
 
   def test_valid_post_image
-    response = Imager::ServerInterface.post("testcollection", "1", File.new("test/test_image.jpg"), small: { width: 100})
+    Imager.configure do |c|
+      c.base_uri = "http://localhost/projects/imager_server"
+      c.auth_code = ""
+      c.collection_path = "images"
+      c.manager_path = "manager"
+    end
+
+    response = Imager::ServerInterface.post("testcollection", "1", "test/image.jpg", small: { width: 100})
     assert_equal true, response
   end
 
   def test_invalid_post_image
-    response = Imager::ServerInterface.post("", "", File.new("test/test_image.jpg"), small: { width: 100})
+    response = true
+    begin
+      Imager.configure do |c|
+        c.base_uri = "http://localhost/projects/imager_server"
+        c.auth_code = ""
+        c.collection_path = "images"
+        c.manager_path = "manager"
+      end
+      Imager::ServerInterface.post("", "", File.new("test/test_image.jpg"), small: { width: 100})
+    rescue
+      response = false
+    end
     assert_equal false, response
   end
 end

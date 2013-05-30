@@ -30,7 +30,7 @@ Or install it yourself as:
 ## Usage
 
     Imager.configure do |c|
-      c.server_uri        = "http://files.myserver.com"
+      c.base_uri          = "http://files.myserver.com"
       c.manager_path      = "manager"
       c.collections_path  = "images"
       c.auth_code         = ""
