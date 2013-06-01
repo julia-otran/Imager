@@ -40,24 +40,24 @@ Or install it yourself as:
   This is for post and delete authentication (manager).
 
 ### Sending the images
-    Imager::ServerInterface.post("Collection", "Album", File.new("test/test_image.png"), small: { width: 100})
+    Imager::ServerInterface.post("Collection", "Album", "test/image.png", small: { width: 100 })
 
 ### Removing the images
-  Not yet.
+    Imager::ServerInterface.delete("Collection", "Album", "image")
 
 ### Using the images
     Imager::LinkHelper.link_for("Collection", "Album", :small)
 Will return:
-    "http://files.myserver.com/images/collection/album/test_image/small.jpg"
+    "http://files.myserver.com/images/collection/album/image/small.jpg"
 Since the server ALWAYS save the images as jpg.
 
 You can use Collection as model name(product) and album as id(1) and get the result:
-    "http://files.myserver.com/images/product/1/test_image/small.jpg"
+    "http://files.myserver.com/images/product/1/image/small.jpg"
   Just save as:
-    Imager::ServerInterface.post("product", "1", File.new("test/test_image.png"), small: { width: 100})
+    Imager::ServerInterface.post("product", "1", "test/image.png", small: { width: 100 })
 
 ## Notes about saving and sizes
-  Saving first as `"product", "1", File.new("test/test_image.png"), small: { width: 100})` and after `"product", "1", File.new("test/other_image.png"), small: { width: 90})` don't changes the size of test_image. Beware!
+  Saving first as `"product", "1", "test/image.png", small: { width: 100 })` and after `"product", "1", "test/otherimage.png", small: { width: 90 })` don't changes the size of image. Beware!
 
 ### Sizes Explain:
   The server accepts the following combinations:
