@@ -54,7 +54,7 @@ Since the server ALWAYS save the images as jpg.
 You can use Collection as model name(product) and album as id(1) and get the result:
     "http://files.myserver.com/images/product/1/image/small.jpg"
   Just save as:
-    Imager::ServerInterface.post("product", "1", "test/image.png", small: { width: 100 })
+    `Imager::ServerInterface.post("product", "1", "test/image.png", small: { width: 100 })`
 
 ## Notes about saving and sizes
   Saving first as `"product", "1", "test/image.png", small: { width: 100 })` and after `"product", "1", "test/otherimage.png", small: { width: 90 })` don't changes the size of image. Beware!
@@ -65,7 +65,7 @@ You can use Collection as model name(product) and album as id(1) and get the res
   YourSizeName: { width:  100 } # Will resize (maintein main aspect) the image for 100px of width
   YourSizeName: { height: 100 } # Will resize (maintein main aspect) the image for 100px of height
   YourSizeName: { width:  100, height: 150 } # Will resize to fit in 100x150 px
-  YourSizeName: { original: true } # Will save the original size. Don't worry. The server compress to 50% of quality.
+  YourSizeName: { original: :original } # Will save the original size. Don't worry. The server compress to 50% of quality.
   ```
   You can have many sizes when posting a image:
   ```
@@ -73,7 +73,7 @@ You can use Collection as model name(product) and album as id(1) and get the res
     small:     { width:  100 }
     gallery:   { height: 300 }
     mini-home: { width: 50, height: 50 }
-    original:  true
+    original: :original
   ]
   ```
 ### Compression
