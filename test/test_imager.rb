@@ -54,7 +54,7 @@ class ImagerTest < Test::Unit::TestCase
       c.manager_path = your_manager_path
     end
 
-    response = Imager::ServerInterface.post("testcollection", "1", "test/image.jpg", small: { width: 100})
+    response = Imager::ServerInterface.post("testcollection", "1", "test/image.jpg", small: { width: 100 })
     assert_equal true, response
   end
 
@@ -67,7 +67,7 @@ class ImagerTest < Test::Unit::TestCase
         c.collection_path = your_collections_path
         c.manager_path = your_manager_path
       end
-      Imager::ServerInterface.post("", "", File.new("test/test_image.jpg"), small: { width: 100})
+      Imager::ServerInterface.post("", "", "test/image.jpg", small: { width: 100 })
     rescue
       response = false
     end
@@ -100,5 +100,19 @@ class ImagerTest < Test::Unit::TestCase
       response = false
     end
     assert_equal false, response
+  end
+
+  def test_link_helper
+      Imager.configure do |c|
+        c.base_uri = your_base_uri
+        c.auth_code = your_auth_code
+        c.collection_path = your_collections_path
+        c.manager_path = your_manager_path
+      end
+
+      result = Imager::LinkHelper.link_for("testcollection", "1", "image", :small)
+      should_be = "#{your_base_uri}#{your_collections_path}/testcollection/1/image/small.jpg"
+
+      assert_equal should_be, result
   end
 end

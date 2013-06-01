@@ -1,6 +1,7 @@
 require "imager/version"
 require "imager/server_client"
 require "imager/server_interface"
+require "imager/link_helper"
 
 module Imager
 
