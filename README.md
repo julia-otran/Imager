@@ -46,7 +46,7 @@ Or install it yourself as:
     Imager::ServerInterface.delete("Collection", "Album", "image")
 
 ### Using the images
-    Imager::LinkHelper.link_for("Collection", "Album", :small)
+    Imager::LinkHelper.link_for("Collection", "Album", "image", :small)
 Will return:
     "http://files.myserver.com/images/collection/album/image/small.jpg"
 Since the server ALWAYS save the images as jpg.
