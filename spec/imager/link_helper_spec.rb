@@ -4,7 +4,7 @@ describe Imager::LinkHelper do
   describe ".link_for" do
     it "returns a correct link" do
       Imager.configure do |c|
-        c.base_uri = "http://base_uri/"
+        c.base_uri = "http://base_uri"
         c.collection_path = "images"
       end
 

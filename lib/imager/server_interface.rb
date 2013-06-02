@@ -42,10 +42,11 @@ module Imager
       when 400
         raise ArgumentError, response.body, caller
       when 401
-        raise Error, "Authentication failed."
+        raise ArgumentError, "Authentication failed: " + response.body, caller
       else
-        raise Error, "The server returned an error."
+        raise ArgumentError, "The server returned an error." + response.body, caller
       end
+      return false
     end
 
     def self.auth_token(query, file=nil)
