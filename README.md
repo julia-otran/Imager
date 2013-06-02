@@ -17,7 +17,7 @@ A lot of the features are not implemented yet (except for the server)
 
 Add this line to your application's Gemfile:
 
-    gem 'Imager'
+    gem 'imager'
 
 And then execute:
 
@@ -25,7 +25,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install Imager
+    $ gem install imager
 
 ## Usage
 
@@ -40,18 +40,23 @@ Or install it yourself as:
   This is for post and delete authentication (manager).
 
 ### Sending the images
+
     Imager::ServerInterface.post("Collection", "Album", "test/image.png", small: { width: 100 })
 
 ### Removing the images
+
     Imager::ServerInterface.delete("Collection", "Album", "image")
 
 ### Using the images
+
     Imager::LinkHelper.link_for("Collection", "Album", "image", :small)
+    
 Will return:
     "http://files.myserver.com/images/collection/album/image/small.jpg"
-Since the server ALWAYS save the images as jpg.
+    Since the server ALWAYS save the images as jpg.
 
 You can use Collection as model name(product) and album as id(1) and get the result:
+
     "http://files.myserver.com/images/product/1/image/small.jpg"
   Just save as:
     `Imager::ServerInterface.post("product", "1", "test/image.png", small: { width: 100 })`
@@ -61,13 +66,16 @@ You can use Collection as model name(product) and album as id(1) and get the res
 
 ### Sizes Explain:
   The server accepts the following combinations:
+  
   ```
   YourSizeName: { width:  100 } # Will resize (maintein main aspect) the image for 100px of width
   YourSizeName: { height: 100 } # Will resize (maintein main aspect) the image for 100px of height
   YourSizeName: { width:  100, height: 150 } # Will resize to fit in 100x150 px
   YourSizeName: { original: :original } # Will save the original size. Don't worry. The server compress to 50% of quality.
   ```
+  
   You can have many sizes when posting a image:
+  
   ```
   sizes = [
     small:     { width:  100 }
@@ -76,5 +84,6 @@ You can use Collection as model name(product) and album as id(1) and get the res
     original: :original
   ]
   ```
+  
 ### Compression
   The images always are compressed to 70%. Except for the original size (50%).
