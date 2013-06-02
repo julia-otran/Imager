@@ -13,10 +13,9 @@ describe Imager::ServerInterface do
       it "raises an error" do
         expect {
           described_class.post("", "", "", size: { width: 100 })
-        }.to raise_error
+        }.to raise_error Imager::ImagerError
       end
     end
-
   end
 
   describe ".delete" do
@@ -32,7 +31,7 @@ describe Imager::ServerInterface do
       it "raises an error" do
         expect {
           described_class.delete("test", "1", "non_existing_image")
-        }.to raise_error
+        }.to raise_error Imager::ImagerError
       end
     end
   end

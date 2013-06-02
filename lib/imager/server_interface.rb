@@ -1,5 +1,6 @@
 require 'openssl'
 require 'cgi'
+require 'json'
 
 module Imager
   class ServerInterface
@@ -23,7 +24,7 @@ module Imager
       query[:file_id]    = file_id
       query[:auth]       = auth_token(query)
 
-      return parse(client.post('/delete.php', { query: query }))
+      return parse(client.post('/delete.php', { query: query }), true)
     end
 
     def self.client
@@ -35,23 +36,43 @@ module Imager
 
     private
 
-    def self.parse(response)
+    def self.parse(response, is_delete = false)
       case response.code
-      when 200..299
+      when 204
         return true
+      when 200..299
+        parsed =  begin
+                    !!JSON.parse(response.body)
+                  rescue
+                    false
+                  end
+
+        return true if parsed
+        # Something is wrong with the server
+        raise ArgumentError, "The server send an invalid response.", caller
       when 400
-        raise ArgumentError, response.body, caller
+        raise ImagerError, response.body, caller
+      when 404
+        # We are deleting something that doesn't exist
+        if (is_delete && response.body == "Cannot find the file.")
+          raise ImagerError, response.body, caller
+        else
+          raise ArgumentError, "The server return an unexpected 404.", caller
+        end
       when 401
+        # Authentication with the server failed
         raise ArgumentError, "Authentication failed: " + response.body, caller
       else
-        raise ArgumentError, "The server returned an error." + response.body, caller
+        raise ArgumentError, "The server returned an error: " + response.body, caller
       end
-      return false
     end
 
     def self.auth_token(query, file=nil)
       query_hash = query.clone
       if file
+        if !File.file?(file)
+          raise ImagerError, "Invalid image file", caller
+        end
         query_hash[:file_md5]   = Digest::MD5.file(file)
         query_hash[:file_sha1]  = Digest::SHA1.file(file)
         query_hash[:file_name]  = File.basename(file)
