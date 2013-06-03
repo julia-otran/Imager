@@ -4,6 +4,9 @@ Use with [ImagerServer](https://github.com/guilherme-otran/ImagerServer), a stor
 Check the test directory for know how the server works.
  You can save your images in other domain running ImagerServer.
 
+[![Build Status](https://travis-ci.org/guilherme-otran/Imager.png?branch=master)](https://travis-ci.org/guilherme-otran/Imager)
+[![Dependency Status](https://gemnasium.com/guilherme-otran/Imager.png)](https://gemnasium.com/guilherme-otran/Imager)
+
 ## Please contribute!
 A lot of the features are not implemented yet (except for the server)
 
