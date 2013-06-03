@@ -28,10 +28,10 @@ module Imager
     end
 
     def self.client
-      unless ServerClient.base_uri
-        ServerClient.base_uri Imager.base_uri + '/' + Imager.manager_path
+      unless Imager::ServerClient.base_uri
+        Imager::ServerClient.base_uri Imager.base_uri + '/' + Imager.manager_path
       end
-      ServerClient
+      Imager::ServerClient
     end
 
     private

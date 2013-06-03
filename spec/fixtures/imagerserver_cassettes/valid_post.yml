@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://dev.local/imagerserver/manager/post.php
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        BAhbClsHSSIPY29sbGVjdGlvbgY6BkVGSSIJdGVzdAY7AFRbB0kiCmFsYnVt
+        BjsARkkiBjEGOwBUWwdJIhhzaXplc1tzbWFsbF1bd2lkdGhdBjsARmlpWwdJ
+        IglmaWxlBjsARm86EUZha2VVcGxvYWRJTwg6F0BvcmlnaW5hbF9maWxlbmFt
+        ZUkiDmltYWdlLmpwZwY7AFQ6EkBjb250ZW50X3R5cGVJIh1hcHBsaWNhdGlv
+        bi9vY3RldC1zdHJlYW0GOwBUOgpAYm9keUkiApwB/9j/4AAQSkZJRgABAQEA
+        SABIAAD/2wBDAAEBAQEBAQEBAQEBAQECAgMCAgICAgQDAwIDBQQFBQUEBAQF
+        BgcGBQUHBgQEBgkGBwgICAgIBQYJCgkICgcICAj/2wBDAQEBAQICAgQCAgQI
+        BQQFCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI
+        CAgICAgICAj/wAARCAMABAADASIAAhEBAxEB/8QAHwAAAAYDAQEBAAAAAAAA
+        AAAABAUGBwgJAgMKAQAL/8QAThAAAQMCBQIEAwYEBAQFAgENAQIDBAURAAYH
+        EiETMQgiQVEUYXEJFSMygZFCUqGxFjNiwQokctEXQ4Lh8JLxJTRTY6IYJrIn
+        NURzwqP/xAAcAQABBQEBAQAAAAAAAAAAAAAFAQIDBAYABwj/xAA5EQABAwMD
+        AgUCBQMEAwEBAQEBAgMRAAQhBRIxQVEGEyJhcYGRFDKhscHR4fAVI0LxBxZS
+        MyQlQ//aAAwDAQACEQMRAD8A468keHnMOpGaP/BvIFWydXM4VgY6DWVuY29k
+        aW5nIgpDUDg1MFsHSSIJYXV0aAY7AEYiJTQwZDk3MDM4OWIyMzA5NDdkNTlm
+        OWExZTZlOTBhNzQ0
+    headers:
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '382022'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 03 Jun 2013 03:28:23 GMT
+      Server:
+      - Apache/2.4.4 (Win32) OpenSSL/0.9.8y PHP/5.4.13
+      X-Powered-By:
+      - PHP/5.4.13
+      Content-Type:
+      - text/html; charset=UTF-8
+      Content-Length:
+      - '165'
+    body:
+      encoding: UTF-8
+      string: '{"collection":"test","album":"1","file_id":"image","accepted_sizes":["small"],"URIs":{"small":"http:\/\/dev.local\/imagerserver\/images\/test\/1\/image\/small.jpg"}}'
+    http_version: 
+  recorded_at: Mon, 03 Jun 2013 03:28:24 GMT
+recorded_with: VCR 2.5.0

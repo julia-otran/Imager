@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://dev.local/imagerserver/manager/post.php
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        BAhbClsHSSIPY29sbGVjdGlvbgY6BkVGSSIABjsAVFsHSSIKYWxidW0GOwBG
+        SSIABjsAVFsHSSIXc2l6ZXNbc2l6ZV1bd2lkdGhdBjsARmlpWwdJIglmaWxl
+        BjsARm86EUZha2VVcGxvYWRJTwg6F0BvcmlnaW5hbF9maWxlbmFtZUkiDmlt
+        YWdlLmpwZwY7AFQ6EkBjb250ZW50X3R5cGVJIh1hcHBsaWNhdGlvbi9vY3Rl
+        dC1zdHJlYW0GOwBUOgpAYm9keUkiApwB/9j/4AAQSkZJRgABAQEASABIAAD/
+        2wBDAAEBAQEBAQEBAQEBAQECAgMCAgICAgQDAwIDBQQFBQUEBAQFBgcGBQUH
+        BgQEBgkGBwgICAgIBQYJCgkICgcICAj/2wBDAQEBAQICAgQCAgQIBQQFCAgI
+        CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI
+        CAj/wAARCAMABAADASIAAhEBAxEB/8QAHwAAAAYDAQEBAAAAAAAAAAAABAUG
+        BwgJAgMKAQAL/8QAThAAAQMCBQIEAwYEBAQFAgENAQIDBAURAAYHEiETMQgi
+        QVEUYXEJFSMygZFCUqGxFjNiwQokctEXQ4Lh8JLxJTRTY6IYJrInNURzwqP/
+        xAAcAQABBQEBAQAAAAAAAAAAAAAFAQIDBAYABwj/xAA5EQABAwMDAgUCBQME
+        AwEBAQEBAgMRAAQhBRIxQVEGEyJhcYGRFDKhscHR4fAVI0LxBxZSMyQlQ//a
+        AAwDAQACEQMRAD8A468keHnMOpGaP/BvIFWydXM4VgY6DWVuY29kaW5nIgpD
+        UDg1MFsHSSIJYXV0aAY7AEYiJTYzY2IxNDE5YjlkNmNlNTVkNmFmNDEwMmRi
+        OGQzNjc5
+    headers:
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '382016'
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Mon, 03 Jun 2013 03:28:24 GMT
+      Server:
+      - Apache/2.4.4 (Win32) OpenSSL/0.9.8y PHP/5.4.13
+      X-Powered-By:
+      - PHP/5.4.13
+      Connection:
+      - close
+      Content-Type:
+      - text/html; charset=UTF-8
+      Content-Length:
+      - '18'
+    body:
+      encoding: UTF-8
+      string: Invalid collection
+    http_version: 
+  recorded_at: Mon, 03 Jun 2013 03:28:24 GMT
+recorded_with: VCR 2.5.0

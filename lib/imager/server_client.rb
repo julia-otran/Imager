@@ -1,5 +1,7 @@
 require 'httmultiparty'
 
-class ServerClient
-  include HTTMultiParty
+module Imager
+  class ServerClient
+    include HTTMultiParty
+  end
 end
