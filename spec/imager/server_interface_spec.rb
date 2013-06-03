@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'debugger'
+
 describe Imager::ServerInterface do
   describe ".post" do
 
