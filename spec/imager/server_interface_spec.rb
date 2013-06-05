@@ -3,10 +3,19 @@ require 'spec_helper'
 describe Imager::ServerInterface do
   describe ".post" do
 
+
     context "when params are valid" do
       it "returns true" do
         VCR.use_cassette('valid_post') do
           described_class.post("test", "1", "spec/image.jpg", small: { width: 100 }).should be_true
+        end
+      end
+
+      context "when image is a file" do
+        it "returns true" do
+          VCR.use_cassette('valid_post_with_file') do
+            described_class.post("test", "1", File.new("spec/image.jpg"), small: { width: 100 }).should be_true
+          end
         end
       end
     end
