@@ -1,20 +1,30 @@
 require 'spec_helper'
 
 describe Imager::ServerInterface do
+  let(:some_image){ "spec/image.jpg" }
+  let(:some_image_file) { File.new(some_image) }
+  let(:some_image_io)   { UploadIO.new(some_image_file, "application/octet-stream") }
   describe ".post" do
-
 
     context "when params are valid" do
       it "returns true" do
         VCR.use_cassette('valid_post') do
-          described_class.post("test", "1", "spec/image.jpg", small: { width: 100 }).should be_true
+          described_class.post("test", "1", some_image, small: { width: 100 }).should be_true
         end
       end
 
       context "when image is a file" do
         it "returns true" do
           VCR.use_cassette('valid_post_with_file') do
-            described_class.post("test", "1", File.new("spec/image.jpg"), small: { width: 100 }).should be_true
+            described_class.post("test", "1", some_image_file, small: { width: 100 }).should be_true
+          end
+        end
+      end
+
+      context "when image is a IO" do
+        it "returns true" do
+          VCR.use_cassette('valid_post_with_io') do
+            described_class.post("test", "1", some_image_io, small: { width: 100 }).should be_true
           end
         end
       end
@@ -33,7 +43,7 @@ describe Imager::ServerInterface do
       it "raises an error" do
         VCR.use_cassette('invalid_album_and_collection_post') do
           expect {
-            described_class.post("", "", "spec/image.jpg", size: { width: 100 })
+            described_class.post("", "", some_image, size: { width: 100 })
           }.to raise_error Imager::ImagerError
         end
       end
@@ -45,7 +55,7 @@ describe Imager::ServerInterface do
 
       it "returns true" do
         VCR.use_cassette('valid_post') do
-          described_class.post("test", "1", "spec/image.jpg", small: { width: 100 })
+          described_class.post("test", "1", some_image, small: { width: 100 })
         end
         VCR.use_cassette('valid_delete') do
           described_class.delete("test", "1", "image").should be_true

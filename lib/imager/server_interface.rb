@@ -4,6 +4,14 @@ require 'json'
 
 module Imager
   class ServerInterface
+
+    # @param  [String]        Collection for save the image
+    # @param  [String]        Album for save the image
+    # @param  [File, String]  The image file or the path to it.
+    # @param  [Hash]          Sizes you want to save. @see https://github.com/guilherme-otran/Imager#sizes-explain
+    # @return [void]
+    # @raise  [ImagerError]   if some server validation failed.
+    # @raise  [ArgumentError] when something with server comunication is wrong
     def self.post(collection, album, file, sizes)
       query = {}
       query[:collection] = collection
