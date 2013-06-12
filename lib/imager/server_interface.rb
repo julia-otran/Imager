@@ -17,8 +17,11 @@ module Imager
     # @raise  [ImagerError]   if some server validation failed.
     # @raise  [ArgumentError] when something with server comunication is wrong
     def self.post(collection, album, file, sizes, file_id = nil)
-      if (!file) || (file.is_a?(String) && !File.file?(file))
-        raise Imager::ImagerError, 'Invalid file', caller
+      raise Imager::ImagerError "File is empty", caller unless file
+
+      if file.is_a?(String)
+        raise Imager::ImagerError, "File is not a file", caller unless File.file?(file)
+        file = File.new(file)
       end
 
       query = {}
@@ -29,6 +32,9 @@ module Imager
       query[:file_id]    = file_id
       query[:file_id]  ||= file.original_filename if file.respond_to?(:original_filename)
       query[:file_id]  ||= File.basename(file)
+
+      # Remove file extension
+      query[:file_id].gsub!(/(\..{3,4})\z/i, '')
 
       #if (file.respond_to?(:tempfile))
       auth = auth_token(query, file)
@@ -71,7 +77,7 @@ module Imager
         return true if parsed
         # Something is wrong with the server
         raise ArgumentError, "The server send an invalid response.", caller
-      when 400
+      when 422
         raise ImagerError, response.body, caller
       when 404
         # We are deleting something that doesn't exist
