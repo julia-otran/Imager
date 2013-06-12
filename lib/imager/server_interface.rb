@@ -97,8 +97,16 @@ module Imager
     def self.auth_token(query, file=nil)
       query_hash = query.clone
       if file
-        query_hash[:file_md5]   = Digest::MD5.file(file)
-        query_hash[:file_sha1]  = Digest::SHA1.file(file)
+        begin
+          query_hash[:file_md5]   = Digest::MD5.file(file)
+          query_hash[:file_sha1]  = Digest::SHA1.file(file)
+        rescue
+          raise Imager::ImagerError, "Cannot read the file", caller unless file.respond_to?(:read)
+
+          # Fix for rubinius
+          query_hash[:file_md5]  = Digest::MD5.hexdigest(file)
+          query_hash[:file_sha1] = Digest::SHA1.hexdigest(file)
+        end
       end
 
       query_hash = to_query(query_hash)
