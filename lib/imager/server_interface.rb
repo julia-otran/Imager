@@ -10,7 +10,7 @@ module Imager
 
     # @param  [String]        Collection for save the image
     # @param  [String]        Album for save the image
-    # @param  [UploadIO, File, String]  The image file or the path to it.
+    # @param  [UploadIO, File, String]  The image file or the path to it
     # @param  [Hash]          Sizes you want to save. @see https://github.com/guilherme-otran/Imager#sizes-explain
     # @param  [String]        File id. if passed file_id will be this instead of file.original_filename or File.basename(file).
     # @return [void]
@@ -44,6 +44,11 @@ module Imager
       return parse(client.post('/post.php', { query: query }))
     end
 
+    # @param  [String]        Collection for save the image
+    # @param  [String]        Album for save the image
+    # @param  [String]        File id
+    # @raise  [ImagerError]   if collection or album or file_id is wrong
+    # @raise  [ArgumentError] when something with server comunication is wrong
     def self.delete(collection, album, file_id)
       query = {}
       query[:collection] = collection

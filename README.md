@@ -44,16 +44,28 @@ Or install it yourself as:
 
 ### Sending the images
 
-    Imager::ServerInterface.post("Collection", "Album", "test/image.png", small: { width: 100 })
+    Imager::ServerInterface.post("Collection", "Album", "test/imageid.png", small: { width: 100 })
+
+  Creates:
+
+    http://files.myserver.com/images/Collection/Album/imageid/small.jpg
+
+  And
+
+    Imager::ServerInterface.post("Collection", "Album", "test/image.png", small: { width: 100 }, "someimageid")
+
+  Creates
+
+    http://files.myserver.com/images/Collection/Album/someimageid/small.jpg
 
 ### Removing the images
 
-    Imager::ServerInterface.delete("Collection", "Album", "image")
+    Imager::ServerInterface.delete("Collection", "Album", "imageid")
 
 ### Using the images
 
-    Imager::LinkHelper.link_for("Collection", "Album", "image", :small)
-    
+    Imager::LinkHelper.link_for("Collection", "Album", "imageid", :small)
+
 Will return:
     "http://files.myserver.com/images/collection/album/image/small.jpg"
     Since the server ALWAYS save the images as jpg.
@@ -69,24 +81,24 @@ You can use Collection as model name(product) and album as id(1) and get the res
 
 ### Sizes Explain:
   The server accepts the following combinations:
-  
+
   ```
+  YourSizeName: :original       # Will save the original size. Don't worry. The server compress to 50% of quality.
   YourSizeName: { width:  100 } # Will resize (maintein main aspect) the image for 100px of width
   YourSizeName: { height: 100 } # Will resize (maintein main aspect) the image for 100px of height
   YourSizeName: { width:  100, height: 150 } # Will resize to fit in 100x150 px
-  YourSizeName: { original: :original } # Will save the original size. Don't worry. The server compress to 50% of quality.
   ```
-  
+
   You can have many sizes when posting a image:
-  
+
   ```
-  sizes = [
-    small:     { width:  100 }
-    gallery:   { height: 300 }
-    mini-home: { width: 50, height: 50 }
-    original: :original
-  ]
+  sizes = {
+    small:     { width:  100 },
+    gallery:   { height: 300 },
+    mini-home: { width: 50, height: 50 },
+    original:  :original
+  }
   ```
-  
+
 ### Compression
   The images always are compressed to 70%. Except for the original size (50%).
