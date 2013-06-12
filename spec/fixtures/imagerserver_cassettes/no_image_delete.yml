@@ -9,24 +9,24 @@ http_interactions:
     headers: {}
   response:
     status:
-      code: 400
-      message: Bad Request
+      code: 422
+      message: Unprocessable Entity
     headers:
-      Date:
-      - Mon, 03 Jun 2013 03:08:22 GMT
       Server:
-      - Apache/2.4.4 (Win32) OpenSSL/0.9.8y PHP/5.4.13
-      X-Powered-By:
-      - PHP/5.4.13
-      Connection:
-      - close
+      - nginx/1.2.1
+      Date:
+      - Wed, 12 Jun 2013 02:42:43 GMT
       Content-Type:
-      - text/html; charset=UTF-8
-      Content-Length:
-      - '16'
+      - text/html
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Powered-By:
+      - PHP/5.4.6-1ubuntu1.2
     body:
       encoding: UTF-8
       string: Invalid file_id.
     http_version: 
-  recorded_at: Mon, 03 Jun 2013 03:08:22 GMT
+  recorded_at: Wed, 12 Jun 2013 02:42:43 GMT
 recorded_with: VCR 2.5.0
