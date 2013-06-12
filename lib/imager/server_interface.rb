@@ -5,21 +5,34 @@ require 'json'
 module Imager
   class ServerInterface
 
+    # if file is a class that respond to original_filename (like UploadIO)
+    # the file id will be the original_filename.
+
     # @param  [String]        Collection for save the image
     # @param  [String]        Album for save the image
-    # @param  [File, String]  The image file or the path to it.
+    # @param  [UploadIO, File, String]  The image file or the path to it.
     # @param  [Hash]          Sizes you want to save. @see https://github.com/guilherme-otran/Imager#sizes-explain
+    # @param  [String]        File id. if passed file_id will be this instead of file.original_filename or File.basename(file).
     # @return [void]
     # @raise  [ImagerError]   if some server validation failed.
     # @raise  [ArgumentError] when something with server comunication is wrong
-    def self.post(collection, album, file, sizes)
+    def self.post(collection, album, file, sizes, file_id = nil)
+      if (!file) || (file.is_a?(String) && !File.file?(file))
+        raise Imager::ImagerError, 'Invalid file', caller
+      end
+
       query = {}
       query[:collection] = collection
       query[:album]      = album
       query[:sizes]      = sizes
 
+      query[:file_id]    = file_id
+      query[:file_id]  ||= file.original_filename if file.respond_to?(:original_filename)
+      query[:file_id]  ||= File.basename(file)
+
+      #if (file.respond_to?(:tempfile))
       auth = auth_token(query, file)
-      query[:file] = File.new(file)
+      query[:file] = file
       query[:auth] = auth
 
       return parse(client.post('/post.php', { query: query }))
@@ -78,12 +91,8 @@ module Imager
     def self.auth_token(query, file=nil)
       query_hash = query.clone
       if file
-        if !File.file?(file)
-          raise ImagerError, "Invalid image file", caller
-        end
         query_hash[:file_md5]   = Digest::MD5.file(file)
         query_hash[:file_sha1]  = Digest::SHA1.file(file)
-        query_hash[:file_name]  = File.basename(file)
       end
 
       query_hash = to_query(query_hash)
