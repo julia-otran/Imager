@@ -36,12 +36,11 @@ module Imager
       # Remove file extension
       query[:file_id].gsub!(/(\..{3,4})\z/i, '')
 
-      #if (file.respond_to?(:tempfile))
       auth = auth_token(query, file)
       query[:file] = file
       query[:auth] = auth
 
-      return parse(client.post('/post.php', { query: query }))
+      return parse client.post('/post.php', query: query)
     end
 
     # @param  [String]        Collection for save the image
@@ -56,7 +55,7 @@ module Imager
       query[:file_id]    = file_id
       query[:auth]       = auth_token(query)
 
-      return parse(client.post('/delete.php', { query: query }), true)
+      return parse client.post('/delete.php', query: query), true
     end
 
     def self.client
@@ -109,8 +108,8 @@ module Imager
           raise Imager::ImagerError, "Cannot read the file", caller unless file.respond_to?(:read)
 
           # Fix for rubinius
-          query_hash[:file_md5]  = Digest::MD5.hexdigest(file)
-          query_hash[:file_sha1] = Digest::SHA1.hexdigest(file)
+          query_hash[:file_md5]  = Digest::MD5.hexdigest(file.read)
+          query_hash[:file_sha1] = Digest::SHA1.hexdigest(file.read)
         end
       end
 
