@@ -5,7 +5,7 @@ describe Imager do
 
     it "yields" do
       described_class.configure do |c|
-        c.should be described_class
+        expect(c).to be described_class
       end
     end
 
@@ -14,7 +14,7 @@ describe Imager do
         c.base_uri = "http://baseuri.bla/"
       end
 
-      described_class.base_uri.should eq "http://baseuri.bla/"
+      expect(described_class.base_uri).to eq "http://baseuri.bla/"
     end
 
     it "sets manager_path" do
@@ -22,7 +22,7 @@ describe Imager do
         c.manager_path = "manager_path"
       end
 
-      described_class.manager_path.should eq "manager_path"
+      expect(described_class.manager_path).to eq "manager_path"
     end
 
     it "sets collection_path" do
@@ -30,7 +30,7 @@ describe Imager do
         c.collection_path = "your_collections_path"
       end
 
-      described_class.collection_path.should eq "your_collections_path"
+      expect(described_class.collection_path).to eq "your_collections_path"
     end
 
     it "sets auth_code" do
@@ -38,7 +38,7 @@ describe Imager do
         c.auth_code = "your_auth_code"
       end
 
-       described_class.auth_code.should eq "your_auth_code"
+       expect(described_class.auth_code).to eq "your_auth_code"
     end
   end
 end

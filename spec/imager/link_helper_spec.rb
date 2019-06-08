@@ -11,7 +11,7 @@ describe Imager::LinkHelper do
       correct_link = "http://base_uri/images/testcollection/1/image/small.jpg"
       result = described_class.link_for("testcollection", "1", "image", :small)
 
-      result.should eq correct_link
+      expect(result).to eq correct_link
     end
   end
 end

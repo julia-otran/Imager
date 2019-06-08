@@ -1,7 +1,7 @@
-require 'httmultiparty'
+require 'httparty'
 
 module Imager
   class ServerClient
-    include HTTMultiParty
+    include HTTParty
   end
 end

@@ -40,7 +40,7 @@ module Imager
       query[:file] = file
       query[:auth] = auth
 
-      return parse client.post('/post.php', query: query)
+      return parse client.post('/post.php', multipart: true, body: query)
     end
 
     # @param  [String]        Collection for save the image
@@ -55,7 +55,7 @@ module Imager
       query[:file_id]    = file_id
       query[:auth]       = auth_token(query)
 
-      return parse client.post('/delete.php', query: query), true
+      return parse client.post('/delete.php', multipart: true, body: query), true
     end
 
     def self.client

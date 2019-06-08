@@ -5,9 +5,7 @@ require 'minitest/autorun'
 require 'webmock/minitest'
 require 'vcr'
 require 'turn'
-
-# Hack for HTTMultiParty And VCR
-require 'support/httmultiparty'
+require "rack/test"
 
 RSpec.configure do |c|
   c.before do

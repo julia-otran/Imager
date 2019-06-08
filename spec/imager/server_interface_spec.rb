@@ -3,20 +3,20 @@ require 'spec_helper'
 describe Imager::ServerInterface do
   let(:some_image){ "spec/image.jpg" }
   let(:some_image_file) { File.new(some_image) }
-  let(:some_image_io)   { UploadIO.new(some_image_file, "application/octet-stream") }
+  let(:some_image_io)   { Rack::Test::UploadedFile.new(some_image_file, "application/octet-stream") }
   describe ".post" do
 
     context "when params are valid" do
       it "returns true" do
         VCR.use_cassette('valid_post') do
-          described_class.post("test", "1", some_image, small: { width: 100 }).should be_true
+          expect(described_class.post("test", "1", some_image, small: { width: 100 })).to be_truthy
         end
       end
 
       context "when image is a file" do
         it "returns true" do
           VCR.use_cassette('valid_post_with_file') do
-            described_class.post("test", "1", some_image_file, small: { width: 100 }).should be_true
+            expect(described_class.post("test", "1", some_image_file, small: { width: 100 })).to be_truthy
           end
         end
       end
@@ -24,7 +24,7 @@ describe Imager::ServerInterface do
       context "when image is a IO" do
         it "returns true" do
           VCR.use_cassette('valid_post_with_io') do
-            described_class.post("test", "1", some_image_io, small: { width: 100 }).should be_true
+            expect(described_class.post("test", "1", some_image_io, small: { width: 100 })).to be_truthy
           end
         end
       end
@@ -58,7 +58,7 @@ describe Imager::ServerInterface do
           described_class.post("test", "1", some_image, small: { width: 100 })
         end
         VCR.use_cassette('valid_delete') do
-          described_class.delete("test", "1", "image").should be_true
+          expect(described_class.delete("test", "1", "image")).to be_truthy
         end
       end
     end
