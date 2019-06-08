@@ -19,12 +19,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "webmock"
-  spec.add_development_dependency "vcr"
-  spec.add_development_dependency "turn"
-  spec.add_development_dependency "rack-test"
-  spec.add_dependency "httparty"
-  spec.add_dependency "json"
+  spec.add_development_dependency "rake", "~> 12"
+  spec.add_development_dependency "rspec", "~> 3.8"
+  spec.add_development_dependency "webmock", "~> 3.6"
+  spec.add_development_dependency "vcr", "~> 5.0"
+  spec.add_development_dependency "turn", "~> 0.9"
+  spec.add_development_dependency "rack-test", "~> 1.1"
+  spec.add_dependency "httparty", "~> 0.17"
+  spec.add_dependency "json", "~> 2.2"
 end
