@@ -2,7 +2,7 @@ require 'imager'
 
 #dependencies
 require 'minitest/autorun'
-require 'webmock/minitest'
+require 'webmock/rspec'
 require 'vcr'
 require 'turn'
 require "rack/test"
@@ -10,7 +10,7 @@ require "rack/test"
 RSpec.configure do |c|
   c.before do
     Imager.configure do |c|
-      c.base_uri        = "http://dev.local/imagerserver"
+      c.base_uri        = "http://localhost/imagerserver"
       c.auth_code       = "ABCDE"
       c.collection_path = "images"
       c.manager_path    = "manager"

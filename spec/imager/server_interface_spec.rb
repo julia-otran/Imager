@@ -43,7 +43,7 @@ describe Imager::ServerInterface do
       it "raises an error" do
         VCR.use_cassette('invalid_album_and_collection_post') do
           expect {
-            described_class.post("", "", some_image, size: { width: 100 })
+            described_class.post("", "", some_image_io, size: { width: 100 })
           }.to raise_error Imager::ImagerError
         end
       end
@@ -55,7 +55,7 @@ describe Imager::ServerInterface do
 
       it "returns true" do
         VCR.use_cassette('valid_post') do
-          described_class.post("test", "1", some_image, small: { width: 100 })
+          described_class.post("test", "1", some_image_io, small: { width: 100 })
         end
         VCR.use_cassette('valid_delete') do
           expect(described_class.delete("test", "1", "image")).to be_truthy

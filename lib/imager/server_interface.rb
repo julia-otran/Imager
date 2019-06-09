@@ -24,21 +24,36 @@ module Imager
         file = File.new(file)
       end
 
-      query = {}
-      query[:collection] = collection
-      query[:album]      = album
-      query[:sizes]      = sizes
+      options = {}
+      options[:collection] = collection.to_s
+      options[:album]      = album.to_s
+      options[:sizes]      = sizes
 
-      query[:file_id]    = file_id
-      query[:file_id]  ||= file.original_filename if file.respond_to?(:original_filename)
-      query[:file_id]  ||= File.basename(file)
+      options[:file_id]    = file_id
+      options[:file_id]  ||= file.original_filename if file.respond_to?(:original_filename)
+      options[:file_id]  ||= File.basename(file)
 
       # Remove file extension
-      query[:file_id].gsub!(/(\..{3,4})\z/i, '')
+      options[:file_id].gsub!(/(\..{3,4})\z/i, '')
 
-      auth = auth_token(query, file)
-      query[:file] = file
-      query[:auth] = auth
+      begin
+        options[:file_md5]   = Digest::MD5.file(file)
+        options[:file_sha1]  = Digest::SHA1.file(file)
+      rescue
+        raise Imager::ImagerError, "Cannot read the file", caller unless file.respond_to?(:read)
+
+        # Fix for rubinius
+        options[:file_md5]  = Digest::MD5.hexdigest(file.read)
+        options[:file_sha1] = Digest::SHA1.hexdigest(file.read)
+      end
+
+      options_json = JSON.generate(options);
+
+      query = {
+        file: file,
+        options: options_json,
+        auth: auth_token(options_json)
+      };
 
       return parse client.post('/post.php', multipart: true, body: query)
     end
@@ -49,11 +64,16 @@ module Imager
     # @raise  [ImagerError]   if collection or album or file_id is wrong
     # @raise  [ArgumentError] when something with server comunication is wrong
     def self.delete(collection, album, file_id)
+      options = {}
+      options[:collection] = collection.to_s
+      options[:album]      = album.to_s
+      options[:file_id]    = file_id.to_s
+
+      options_json = JSON.generate options
+
       query = {}
-      query[:collection] = collection
-      query[:album]      = album
-      query[:file_id]    = file_id
-      query[:auth]       = auth_token(query)
+      query[:auth]    = auth_token(options_json)
+      query[:options] = options_json
 
       return parse client.post('/delete.php', multipart: true, body: query), true
     end
@@ -79,8 +99,9 @@ module Imager
                   end
 
         return true if parsed
+
         # Something is wrong with the server
-        raise ArgumentError, "The server send an invalid response.", caller
+        raise ArgumentError, "The server send an invalid response: #{response.body}", caller
       when 422
         raise ImagerError, response.body, caller
       when 404
@@ -98,33 +119,8 @@ module Imager
       end
     end
 
-    def self.auth_token(query, file=nil)
-      query_hash = query.clone
-      if file
-        begin
-          query_hash[:file_md5]   = Digest::MD5.file(file)
-          query_hash[:file_sha1]  = Digest::SHA1.file(file)
-        rescue
-          raise Imager::ImagerError, "Cannot read the file", caller unless file.respond_to?(:read)
-
-          # Fix for rubinius
-          query_hash[:file_md5]  = Digest::MD5.hexdigest(file.read)
-          query_hash[:file_sha1] = Digest::SHA1.hexdigest(file.read)
-        end
-      end
-
-      query_hash = to_query(query_hash)
-      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('md5'), Imager.auth_code, query_hash)
-    end
-
-    def self.to_query(hash, namespace=false)
-      if(hash.is_a? Hash)
-        hash.collect do |k, v|
-          to_query(v, namespace ? "#{namespace}[#{k}]" : k)
-        end.join '&'
-      else
-        CGI.escape(namespace.to_s) + "=" + CGI.escape(hash.to_s)
-      end
+    def self.auth_token(options_json)
+      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('md5'), Imager.auth_code, options_json)
     end
   end
 end
